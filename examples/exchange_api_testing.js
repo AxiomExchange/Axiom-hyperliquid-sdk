@@ -4,7 +4,7 @@ const { Hyperliquid } = require("../dist/index");
 const readline = require("readline");
 require("dotenv").config();
 
-const cloid = "0x1234567890abcdef1234567890abcdef"
+const cloid = "0x1234567890abcdef1234567890abcdef";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -19,31 +19,14 @@ function waitForUserInput(message) {
   });
 }
 
-async function testCustomExchangeAPI() {
-  // Initialize the SDK (replace with your actual private key and other necessary parameters)
-  const private_key = "";
-  const user_address = ""
-  const testnet = true// false for mainnet, true for testnet
-  const vaultAddress = null // or your vault address
-  const sdk = new Hyperliquid(private_key, testnet, user_address, vaultAddress); 
-
-  try {
-    const cancelResponse = await sdk.custom.cancelAllOrders();
-    console.log(cancelResponse);
-  } catch (error) {
-    console.error("An error occurred:", error);
-  } finally {
-    rl.close();
-  }
-}
-
 async function testExchangeAPI() {
   // Initialize the SDK (replace with your actual private key and other necessary parameters)
   const private_key = "";
-  const user_address = ""
-  const testnet = true// false for mainnet, true for testnet
-  const vaultAddress = null // or your vault address
+  const user_address = "";
+  const testnet = true; // false for mainnet, true for testnet
+  const vaultAddress = null; // or your vault address
   const sdk = new Hyperliquid(private_key, testnet, user_address, vaultAddress); 
+
   try {
     console.log("Testing ExchangeAPI endpoints:");
 
@@ -66,7 +49,7 @@ async function testExchangeAPI() {
     // 2. Cancel Order
     const cancelRequest = {
       coin: "SOL-PERP",
-      o: placeOrderResponse.response.data.statuses[0].resting.oid, // assuming this is where the order ID is
+      o: placeOrderResponse.response.data.statuses[0].resting.oid, // example reference to order ID
     };
     console.log("\n2. Cancel Order:");
     const cancelOrderResponse = await sdk.exchange.cancelOrder(cancelRequest);
@@ -77,8 +60,6 @@ async function testExchangeAPI() {
 
     // 3. Cancel Order by CLOID
     console.log("\n3. Cancel Order by CLOID:");
-    // const placeOrderResponse = await sdk.exchange.placeOrder(orderRequest);
-    // console.log(JSON.stringify(placeOrderResponse));
     const cancelByCloidResponse = await sdk.exchange.cancelOrderByCloid(
       "SOL-PERP",
       cloid
@@ -221,5 +202,4 @@ async function testExchangeAPI() {
   }
 }
 
-// testCustomExchangeAPI();
 testExchangeAPI();
