@@ -101,7 +101,7 @@ export class ExchangeAPI {
       const nonce = Date.now();
       const signature = await signL1Action(this.wallet, actions, vaultAddress, nonce, this.IS_MAINNET);
   
-      const payload = { action: actions, nonce, signature, vaultAddress };
+      const payload = { action: actions, nonce, signature, isFrontend: true, vaultAddress };
       return this.httpApi.makeRequest(payload, 1);
     } catch (error) {
       throw error;
