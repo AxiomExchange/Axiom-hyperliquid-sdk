@@ -114,6 +114,21 @@ export async function signUsdTransferAction(wallet: Wallet, action: any, isMainn
     );
 }
 
+export async function signApproveBuilderFeeAction(wallet: Wallet, action: any, isMainnet: boolean): Promise<Signature> {
+    return signUserSignedAction(
+        wallet,
+        action,
+        [
+            { name: 'hyperliquidChain', type: 'string' },
+            { name: 'maxFeeRate', type: 'string' },
+            { name: 'builder', type: 'address' },
+            { name: 'nonce', type: 'uint64' },
+        ],
+        'HyperliquidTransaction:ApproveBuilderFee',
+        isMainnet
+    );
+}
+
 export async function signWithdrawFromBridgeAction(wallet: Wallet, action: any, isMainnet: boolean): Promise<Signature> {
     return signUserSignedAction(
         wallet,

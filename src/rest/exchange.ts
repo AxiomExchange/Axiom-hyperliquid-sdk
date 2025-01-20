@@ -10,6 +10,7 @@ import {
   signUserSignedAction,
   signUsdTransferAction,
   signWithdrawFromBridgeAction,
+  signApproveBuilderFeeAction,
 } from '../utils/signing';
 import * as CONSTANTS from '../types/constants';
 
@@ -112,18 +113,17 @@ export class ExchangeAPI {
     await this.parent.ensureInitialized();
     try {
       const pct = maxFeeRate / 1000; // 20 -> 0.02%
-      const nonce = Date.now();
       const action = {
         type: "approveBuilderFee",
         hyperliquidChain: this.IS_MAINNET ? 'Mainnet' : 'Testnet',
         signatureChainId: '0xa4b1',
         maxFeeRate: `${pct}%`,
         builder: "0x1cC34f6AF34653c515B47A83e1De70ba9B0CdA1f",
-        nonce: nonce
+        nonce: Date.now()
       };
-      const signature = await signL1Action(this.wallet, action, this.getVaultAddress(), nonce, this.IS_MAINNET);
+      const signature = await signApproveBuilderFeeAction(this.wallet, action, this.IS_MAINNET);
 
-      const payload = { action, nonce, signature, vaultAddress: this.getVaultAddress() };
+      const payload = { action, nonce: action.nonce, signature };
       return this.httpApi.makeRequest(payload, 1);
     } catch (error) {
       throw error;
