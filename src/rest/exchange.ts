@@ -123,7 +123,7 @@ export class ExchangeAPI {
       };
       const signature = await signL1Action(this.wallet, action, this.getVaultAddress(), nonce, this.IS_MAINNET);
 
-      const payload = { action, nonce, signature };
+      const payload = { action, nonce, signature, vaultAddress: this.getVaultAddress() };
       return this.httpApi.makeRequest(payload, 1);
     } catch (error) {
       throw error;
