@@ -31,7 +31,7 @@ interface MultiOrder extends BaseOrder {
 }
 
 export interface Builder {
-    a: string;
+    b: string;
     f: number;
 }
 
