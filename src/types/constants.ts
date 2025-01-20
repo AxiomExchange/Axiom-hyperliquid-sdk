@@ -68,4 +68,4 @@ export const WEBSOCKET = {
     TESTNET_URL: 'wss://api.hyperliquid-testnet.xyz/ws'
 };
 
-export const SDK_CODE = 'PLACEHOLDER';
+export const SDK_CODE = 'AXIOM';
