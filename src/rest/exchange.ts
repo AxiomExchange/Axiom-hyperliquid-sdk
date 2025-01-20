@@ -121,7 +121,7 @@ export class ExchangeAPI {
         builder: "0x1cC34f6AF34653c515B47A83e1De70ba9B0CdA1f",
         nonce: nonce
       };
-      const signature = await signL1Action(this.wallet, action, null, nonce, this.IS_MAINNET);
+      const signature = await signL1Action(this.wallet, action, this.getVaultAddress(), nonce, this.IS_MAINNET);
 
       const payload = { action, nonce, signature };
       return this.httpApi.makeRequest(payload, 1);
