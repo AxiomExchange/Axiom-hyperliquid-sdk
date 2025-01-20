@@ -111,7 +111,7 @@ export class ExchangeAPI {
   async approveBuilderFee(maxFeeRate: number): Promise<any> {
     await this.parent.ensureInitialized();
     try {
-      const pct = maxFeeRate / 100000; // tenths of a basis point
+      const pct = maxFeeRate / 1000; // 20 -> 0.02%
       const nonce = Date.now();
       const action = {
         type: "approveBuilderFee",
