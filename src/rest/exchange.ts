@@ -111,12 +111,13 @@ export class ExchangeAPI {
   async approveBuilderFee(maxFeeRate: number): Promise<any> {
     await this.parent.ensureInitialized();
     try {
+      const pct = maxFeeRate / 100000; // tenths of a basis point
       const nonce = Date.now();
       const action = {
         type: "approveBuilderFee",
         hyperliquidChain: this.IS_MAINNET ? 'Mainnet' : 'Testnet',
         signatureChainId: '0xa4b1',
-        maxFeeRate: maxFeeRate,
+        maxFeeRate: `${pct}%`,
         builder: "0x1cC34f6AF34653c515B47A83e1De70ba9B0CdA1f",
         nonce: nonce
       };
