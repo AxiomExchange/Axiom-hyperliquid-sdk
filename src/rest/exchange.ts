@@ -108,6 +108,27 @@ export class ExchangeAPI {
     }
   }
 
+  async approveBuilderFee(maxFeeRate: number): Promise<any> {
+    await this.parent.ensureInitialized();
+    try {
+      const nonce = Date.now();
+      const action = {
+        type: "approveBuilderFee",
+        hyperliquidChain: this.IS_MAINNET ? 'Mainnet' : 'Testnet',
+        signatureChainId: '0xa4b1',
+        maxFeeRate: maxFeeRate,
+        builder: "0x1cC34f6AF34653c515B47A83e1De70ba9B0CdA1f",
+        nonce: nonce
+      };
+      const signature = await signL1Action(this.wallet, action, null, nonce, this.IS_MAINNET);
+
+      const payload = { action, nonce, signature };
+      return this.httpApi.makeRequest(payload, 1);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async cancelOrder(cancelRequests: CancelOrderRequest | CancelOrderRequest[]): Promise<CancelOrderResponse> {
     await this.parent.ensureInitialized();
     try {
