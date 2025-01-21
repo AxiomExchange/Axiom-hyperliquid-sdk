@@ -96,13 +96,17 @@ export class ExchangeAPI {
           return orderToWire(o, assetIndex);
         })
       );
+
+      if (builder) {
+        builder.b = builder.b.toLowerCase();
+      }
   
       const actions = orderWireToAction(orderWires, grouping, builder);
   
       const nonce = Date.now();
       const signature = await signL1Action(this.wallet, actions, vaultAddress, nonce, this.IS_MAINNET);
   
-      const payload = { action: actions, nonce, signature };
+      const payload = { action: actions, nonce, signature, vaultAddress };
       return this.httpApi.makeRequest(payload, 1);
     } catch (error) {
       throw error;
